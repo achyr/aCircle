@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+</canvas>
+
+<script>
+
+var c = document.getElementById("myCanvas");
+var width = c.width;
+var height = c.height;
+var ctx = c.getContext("2d");
+ctx.fillStyle = "#FFFF00";
+ctx.fillRect(0, 0, width, height);
+var originX = width / 2;
+var originY = height / 2;
+
+var point = function (xCoord, yCoord) {
+  ctx.fillRect(xCoord+originX,yCoord+originY,1,1);
+}
+
+var circle = function( radius ) {
+var x2PlusY2 = radius*radius;
+var upperLimit = x2PlusY2 + radius;
+var x = 0;
+var y = radius;
+//var xLimit = radius / Math.sqrt(2);
+//while( x <= xLimit ) {
+//var yLimit = radius / 2;
+while( y >= x ) {
+     point( x,  y);
+     point(-x,  y);
+     point( x, -y);
+     point(-x, -y);
+     point( y,  x);
+     point( y, -x);
+     point(-y,  x);
+     point(-y, -x);
+     x += 1;
+     x2PlusY2 += x*2 - 1;
+     if (x2PlusY2 > upperLimit ) {
+        y -= 1;
+        x2PlusY2 -= y*2 -1;
+     }
+   } 
+
+}
+
+var circlearc = function( radius ) {
+ctx.beginPath();
+ctx.arc(originX+1, originY+1, radius, 0, 2 * Math.PI, false);
+ctx.lineWidth = 1;
+ctx.strokeStyle = '#FF0000';
+ctx.stroke();
+}
+
+ctx.fillStyle = "#000000"
+circle( 200 );
+circle( 245 );
+for (var j=1; j<197; j++) {
+    circle( j );
+}
+circlearc (200);
+circlearc (245);
+
+for (var j=100; j<197; j++) {
+    circlearc( j );
+}
+
+for( var i=1; i < 200; i++ ) {
+    point(i,i);   
+}
+</script>
+
+</body>
+</html>
